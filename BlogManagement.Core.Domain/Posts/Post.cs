@@ -10,5 +10,6 @@ namespace BlogManagement.Core.Domain.Posts
         public string Title { get; set; }
         public string Body { get; set; }
         public DateTime PublishDate { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

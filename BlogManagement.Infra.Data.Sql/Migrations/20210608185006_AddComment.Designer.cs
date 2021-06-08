@@ -4,14 +4,16 @@ using BlogManagement.Infra.Data.Sql.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlogManagement.Infra.Data.Sql.Migrations
 {
     [DbContext(typeof(BlogManagementDbContext))]
-    partial class BlogManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210608185006_AddComment")]
+    partial class AddComment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,8 +1,11 @@
 using BlogManagement.Core.ApplicationServices.Blogs;
+using BlogManagement.Core.ApplicationServices.Comments;
 using BlogManagement.Core.ApplicationServices.Posts;
 using BlogManagement.Core.Domain.Blogs;
+using BlogManagement.Core.Domain.Comments;
 using BlogManagement.Core.Domain.Posts;
 using BlogManagement.Infra.Data.Sql.Blogs;
+using BlogManagement.Infra.Data.Sql.Comments;
 using BlogManagement.Infra.Data.Sql.Common;
 using BlogManagement.Infra.Data.Sql.Posts;
 using Microsoft.AspNetCore.Builder;
@@ -38,8 +41,10 @@ namespace BlogManagement.Endpoints.API
             services.AddDbContext<BlogManagementDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BlogManagementCnn")));
             services.AddScoped<BlogRepository, EfBlogRepository>();
             services.AddScoped<PostRepository, EfPostRepository>();
+            services.AddScoped<CommentRepository, EfCommentRepository>();
             services.AddScoped<BlogApplicaitonService>();
             services.AddScoped<PostApplicationService>();
+            services.AddScoped<CommentApplicationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

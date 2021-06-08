@@ -12,9 +12,16 @@ namespace BlogManagement.Core.ApplicationServices.Posts
             _postRepository = postRepository;
         }
 
-        public void Add(AddPostCommand postCommand)
+        public void Add(AddUpdatePostCommand postCommand)
         {
             _postRepository.Add(postCommand.ToPost());
+        }
+
+        public void Update(int id, AddUpdatePostCommand postCommand)
+        {
+            var post = postCommand.ToPost();
+            post.Id = id;
+            _postRepository.Update(post);
         }
 
         public Post Get(int postId)
