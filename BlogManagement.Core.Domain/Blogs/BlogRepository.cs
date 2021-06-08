@@ -10,9 +10,7 @@ namespace BlogManagement.Core.Domain.Blogs
     {
         void Add(Blog blog);
         void Remove(int blogId);
-
         Blog Get(int blogId);
         List<Blog> Get();
-
     }
 }
