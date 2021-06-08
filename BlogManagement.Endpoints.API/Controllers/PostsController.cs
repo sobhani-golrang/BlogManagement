@@ -31,9 +31,16 @@ namespace BlogManagement.Endpoints.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(AddPostCommand blogForAdd)
+        public IActionResult Add(AddUpdatePostCommand postForAdd)
         {
-            _postApplicationService.Add(blogForAdd);
+            _postApplicationService.Add(postForAdd);
+            return Ok();
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, AddUpdatePostCommand postForUpdate)
+        {
+            _postApplicationService.Update(id, postForUpdate);
             return Ok();
         }
 

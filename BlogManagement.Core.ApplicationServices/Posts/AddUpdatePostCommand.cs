@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BlogManagement.Core.ApplicationServices.Posts
 {
-    public class AddPostCommand
+    public class AddUpdatePostCommand
     {
         [Required]
         [StringLength(100, MinimumLength = 5)]

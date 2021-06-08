@@ -1,5 +1,6 @@
 using BlogManagement.Core.Domain.Posts;
 using BlogManagement.Infra.Data.Sql.Common;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,16 @@ namespace BlogManagement.Infra.Data.Sql.Posts
         {
             _blogManagementDb = postManagementDb;
         }
+
         public void Add(Post post)
         {
             _blogManagementDb.Add(post);
+            _blogManagementDb.SaveChanges();
+        }
+
+        public void Update(Post post)
+        {
+            _blogManagementDb.Entry(post).State = EntityState.Modified;
             _blogManagementDb.SaveChanges();
         }
 
