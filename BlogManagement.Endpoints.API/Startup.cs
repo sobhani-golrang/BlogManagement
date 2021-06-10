@@ -37,6 +37,7 @@ namespace BlogManagement.Endpoints.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers(c=> {
+                c.Filters.Add(typeof(RequestFilter));
                 c.Filters.Add(typeof(ExceptionFilter));
             });
 

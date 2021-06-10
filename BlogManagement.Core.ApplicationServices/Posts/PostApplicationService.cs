@@ -37,6 +37,7 @@ namespace BlogManagement.Core.ApplicationServices.Posts
             {
                 Title = post.Title,
                 Body = post.Body,
+                BlogId = post.BlogId,
                 ViewCount = post.PostViews.Count,
                 Comments = post.Comments
             };
