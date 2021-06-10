@@ -21,12 +21,14 @@ namespace BlogManagement.Infra.Data.Sql.Posts
         public void Add(Post post)
         {
             _blogManagementDb.Add(post);
+            _blogManagementDb.Entry(post).Property("InsertDate").CurrentValue = DateTime.Now;
             _blogManagementDb.SaveChanges();
         }
 
         public void Update(Post post)
         {
             _blogManagementDb.Entry(post).State = EntityState.Modified;
+            _blogManagementDb.Entry(post).Property("UpdateDate").CurrentValue = DateTime.Now;
             _blogManagementDb.SaveChanges();
         }
 
