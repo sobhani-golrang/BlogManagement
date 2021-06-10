@@ -4,16 +4,20 @@ using BlogManagement.Core.ApplicationServices.Posts;
 using BlogManagement.Core.Domain.Blogs;
 using BlogManagement.Core.Domain.Comments;
 using BlogManagement.Core.Domain.Posts;
+using BlogManagement.Endpoints.API.Filters;
+using BlogManagement.Endpoints.API.Middlewares;
 using BlogManagement.Infra.Data.Sql.Blogs;
 using BlogManagement.Infra.Data.Sql.Comments;
 using BlogManagement.Infra.Data.Sql.Common;
 using BlogManagement.Infra.Data.Sql.Posts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace BlogManagement.Endpoints.API
@@ -30,14 +34,17 @@ namespace BlogManagement.Endpoints.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
+            services.AddControllers(c=> {
+                c.Filters.Add(typeof(ExceptionFilter));
+                c.Filters.Add(typeof(ResultFilter));
+            });
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BlogManagement.Endpoints.API", Version = "v1" });
             });
 
+            services.AddLogging(c=> c.AddSeq(Configuration.GetConnectionString("SeqLogCnn")));
             services.AddDbContext<BlogManagementDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("BlogManagementCnn")));
             services.AddScoped<BlogRepository, EfBlogRepository>();
             services.AddScoped<PostRepository, EfPostRepository>();
@@ -60,8 +67,17 @@ namespace BlogManagement.Endpoints.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
+            app.UseMiddleware<RequestLoggerMiddleware>();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor |
+                ForwardedHeaders.XForwardedProto
+            });
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

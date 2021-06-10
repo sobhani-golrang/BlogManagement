@@ -35,5 +35,11 @@ namespace BlogManagement.Endpoints.API.Controllers
             })
             .ToArray();
         }
+
+        [HttpPost]
+        public void Post()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
