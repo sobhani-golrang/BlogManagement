@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlogManagement.Endpoints.API.Controllers
 {
@@ -25,9 +26,9 @@ namespace BlogManagement.Endpoints.API.Controllers
             return _postApplicationService.Get();
         }
         [HttpGet("{id}")]
-        public Post Get(int id)
+        public async Task<PostViewModel> Get(int id)
         {
-            return _postApplicationService.Get(id);
+            return await _postApplicationService.Get(id);
         }
 
         [HttpPost]

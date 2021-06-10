@@ -32,7 +32,7 @@ namespace BlogManagement.Infra.Data.Sql.Posts
 
         public Post Get(int postId)
         {
-            return _blogManagementDb.Posts.Include(x => x.Comments).FirstOrDefault(c => c.Id == postId);
+            return _blogManagementDb.Posts.Include(x => x.Comments).Include(x => x.PostViews).FirstOrDefault(c => c.Id == postId);
         }
 
         public List<Post> Get()
