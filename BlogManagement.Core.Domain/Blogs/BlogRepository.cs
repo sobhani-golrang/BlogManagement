@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Golrang.Framework.Domain;
 
 namespace BlogManagement.Core.Domain.Blogs
 {
-    public interface BlogRepository
+    public interface BlogRepository : BaseRepository<Blog>
     {
-        void Add(Blog blog);
-        void Remove(int blogId);
-        Blog Get(int blogId);
-        List<Blog> Get();
     }
 }

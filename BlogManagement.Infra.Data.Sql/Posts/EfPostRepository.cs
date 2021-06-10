@@ -1,5 +1,6 @@
 using BlogManagement.Core.Domain.Posts;
 using BlogManagement.Infra.Data.Sql.Common;
+using Golrang.Framework.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,47 +10,18 @@ using System.Threading.Tasks;
 
 namespace BlogManagement.Infra.Data.Sql.Posts
 {
-    public class EfPostRepository : PostRepository
+    public class EfPostRepository : EfBaseRepository<Post>, PostRepository
     {
         private readonly BlogManagementDbContext _blogManagementDb;
 
-        public EfPostRepository(BlogManagementDbContext postManagementDb)
+        public EfPostRepository(BlogManagementDbContext blogManagementDb) : base(blogManagementDb)
         {
-            _blogManagementDb = postManagementDb;
+            _blogManagementDb = blogManagementDb;
         }
 
-        public void Add(Post post)
-        {
-            _blogManagementDb.Add(post);
-            _blogManagementDb.Entry(post).Property("InsertDate").CurrentValue = DateTime.Now;
-            _blogManagementDb.SaveChanges();
-        }
-
-        public void Update(Post post)
-        {
-            _blogManagementDb.Entry(post).State = EntityState.Modified;
-            _blogManagementDb.Entry(post).Property("UpdateDate").CurrentValue = DateTime.Now;
-            _blogManagementDb.SaveChanges();
-        }
-
-        public Post Get(int postId)
+        public override Post Get(int postId)
         {
             return _blogManagementDb.Posts.Include(x => x.Comments).Include(x => x.PostViews).FirstOrDefault(c => c.Id == postId);
-        }
-
-        public List<Post> Get()
-        {
-            return _blogManagementDb.Posts.ToList();
-        }
-
-        public void Remove(int postId)
-        {
-            var post = new Post
-            {
-                Id = postId
-            };
-            _blogManagementDb.Posts.Remove(post);
-            _blogManagementDb.SaveChanges();
         }
     }
 }

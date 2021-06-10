@@ -13,7 +13,7 @@ namespace BlogManagement.Core.ApplicationServices.Comments
 
         public async Task Add(AddCommentCommand commentCommand)
         {
-            await _commentRepository.Add(commentCommand.ToComment());
+            await _commentRepository.AddAsync(commentCommand.ToComment());
         }
     }
 }

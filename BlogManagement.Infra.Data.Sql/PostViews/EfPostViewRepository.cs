@@ -1,20 +1,16 @@
 using System.Threading.Tasks;
 using BlogManagement.Core.Domain.PostViews;
 using BlogManagement.Infra.Data.Sql.Common;
+using Golrang.Framework.Data;
 
 namespace BlogManagement.Infra.Data.Sql.PostViews
 {
-    public class EfPostViewRepository : PostViewRepository
+    public class EfPostViewRepository : EfBaseRepository<PostView>, PostViewRepository
     {
         private readonly BlogManagementDbContext _blogManagementDb;
-        public EfPostViewRepository(BlogManagementDbContext blogManagementDb)
+        public EfPostViewRepository(BlogManagementDbContext blogManagementDb) : base(blogManagementDb)
         {
             _blogManagementDb = blogManagementDb;
-        }
-        public async Task Add(PostView postView)
-        {
-            await _blogManagementDb.AddAsync(postView);
-            await _blogManagementDb.SaveChangesAsync();
         }
     }
 }

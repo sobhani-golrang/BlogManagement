@@ -31,7 +31,7 @@ namespace BlogManagement.Core.ApplicationServices.Posts
 
         public async Task<PostViewModel> Get(int postId)
         {
-            await _postViewRepository.Add(new PostView { PostId = postId, ViewDate = DateTime.Now });
+            await _postViewRepository.AddAsync(new PostView { PostId = postId, ViewDate = DateTime.Now });
             var post = _postRepository.Get(postId);
             return new PostViewModel
             {
