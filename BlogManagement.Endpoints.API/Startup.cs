@@ -36,7 +36,6 @@ namespace BlogManagement.Endpoints.API
         {
             services.AddControllers(c=> {
                 c.Filters.Add(typeof(ExceptionFilter));
-                c.Filters.Add(typeof(ResultFilter));
             });
 
             services.AddSwaggerGen(c =>

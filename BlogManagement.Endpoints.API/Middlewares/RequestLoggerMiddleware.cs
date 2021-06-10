@@ -26,6 +26,7 @@ namespace BlogManagement.Endpoints.API.Middlewares
             _logger.LogInformation("{0:yyyy-MM-dd hh:mm:ss.ffff} Request Starting from \"{1}\" for \"{2}\"",
                 DateTime.Now, httpContext.Connection.RemoteIpAddress, UriHelper.GetDisplayUrl(httpContext.Request));
             await _next.Invoke(httpContext);
+            _logger.LogInformation("{0:yyyy-MM-dd hh:mm:ss.ffff} Request Finished With StatusCode: {1}", DateTime.Now, httpContext.Response.StatusCode);
         }
     }
 }

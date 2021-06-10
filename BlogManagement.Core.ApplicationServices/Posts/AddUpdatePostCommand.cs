@@ -18,13 +18,13 @@ namespace BlogManagement.Core.ApplicationServices.Posts
         [StringLength(500, MinimumLength = 20)]
         public string Body { get; set; }
         [Required]
-        public DateTime PublishDate { get; set; }
+        public int? BlogId { get; set; }
 
         public Post ToPost() => new Post
         {
             Title = Title,
             Body = Body,
-            PublishDate = PublishDate
+            BlogId = BlogId.Value
         };
 
     }
