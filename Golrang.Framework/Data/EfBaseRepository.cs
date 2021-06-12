@@ -18,9 +18,8 @@ namespace Golrang.Framework.Data
         public void Add(TEntity entity)
         {
             _dbContext.Add(entity);
-            var property = _dbContext.Entry(entity).Property("InsertDate");
-            if (property != null)
-                property.CurrentValue = DateTime.Now;
+            if (_dbContext.Entry(entity).Properties.Any(x => x.Metadata.FieldInfo.Name == "InsertDate"))
+                _dbContext.Entry(entity).Property("InsertDate").CurrentValue = DateTime.Now;
             _dbContext.SaveChanges();
         }
 
@@ -33,9 +32,8 @@ namespace Golrang.Framework.Data
         public void Update(TEntity entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
-            var property = _dbContext.Entry(entity).Property("UpdateDate");
-            if (property != null)
-                property.CurrentValue = DateTime.Now;
+            if (_dbContext.Entry(entity).Properties.Any(x => x.Metadata.FieldInfo.Name == "UpdateDate"))
+                _dbContext.Entry(entity).Property("UpdateDate").CurrentValue = DateTime.Now;
             _dbContext.SaveChanges();
         }
 
