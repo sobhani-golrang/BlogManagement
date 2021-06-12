@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using BlogManagement.Core.ApplicationServices.Blogs;
+using BlogManagement.Core.Domain.Blogs;
 using BlogManagement.Endpoints.API;
 using BlogManagement.Infra.Data.Sql.Common;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -48,17 +50,23 @@ namespace BlogManagement.Tests
                     }
                 });
             }).CreateClient();
-            var response = await client.PostAsync("/Blogs", SerializeContent(new AddBlogCommand
+            var command = new AddBlogCommand
             {
                 Name = "Test blog",
                 EnName = "Test Blog En",
                 Desciption = "This is a description for test blog"
-            }));
+            };
+            var response = await client.PostAsync("/Blogs", SerializeContent(command));
             response.EnsureSuccessStatusCode();
 
             response = await client.GetAsync("/Blogs");
             response.EnsureSuccessStatusCode();
-            var result = response.Content.ReadAsStringAsync();
+            var result = await response.Content.ReadAsStringAsync();
+            var objResult = JsonConvert.DeserializeObject<List<Blog>>(result);
+            Assert.Equal(objResult.Count, 1);
+            Assert.Equal(objResult[0].Name, command.Name);
+            Assert.Equal(objResult[0].EnName, command.EnName);
+            Assert.Equal(objResult[0].Desciption, command.Desciption);
             await dbConnection.CloseAsync();
         }
 

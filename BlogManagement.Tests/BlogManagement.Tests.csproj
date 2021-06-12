@@ -17,6 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="5.0.6"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BlogManagement.Endpoints.API\BlogManagement.Endpoints.API.csproj"/>
