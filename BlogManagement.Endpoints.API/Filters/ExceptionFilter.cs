@@ -18,7 +18,7 @@ namespace BlogManagement.Endpoints.API.Filters
         public void OnException(ExceptionContext context)
         {
             _logger.LogError($"{DateTime.Now:yyyy-MM-dd hh:mm:ss.ffff} {context.Exception}");
-            context.Result = new ObjectResult(new { Message = "در انجام عملیات مشکلی واقع گردیده است", RequestId = context.HttpContext.TraceIdentifier });
+            context.Result = new ObjectResult(new { Message = "در انجام عملیات مشکلی پیش آمده است", RequestId = context.HttpContext.TraceIdentifier });
         }
     }
 }
